@@ -1,0 +1,31 @@
+name:                brick-tac-toe
+version:             0.1.0.0
+license:             MIT
+license-file:        LICENSE
+author:              Ranjit Jhala
+maintainer:          rjhala@eng.ucsd.edu
+category:            Game
+build-type:          Simple
+extra-source-files:  ChangeLog.md, README.md
+cabal-version:       >=1.10
+
+executable tic-tac-toe
+  main-is:             Main.hs
+  build-depends:       base >=4.9, random >=1.1 && <1.2
+  hs-source-dirs:      src
+  other-modules:       Checks,
+                       Types,
+                       Misc,
+                       Player.Computer, 
+                       Player.MinMax, 
+                       Player.Human
+
+  default-language:    Haskell2010
+
+test-suite tests
+  default-language: Haskell98
+  type:              exitcode-stdio-1.0
+  hs-source-dirs:    tests
+  ghc-options:       -W -threaded
+  main-is:           Test.hs
+  build-depends:     base >=4.9, process

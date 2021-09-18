@@ -1,2 +1,5 @@
-# tic-tac-toe
-Simple tic-tac-toe using `brick`
+# Tic-Tac-Toe 
+
+Ported from https://github.com/nikivazou/tic-tac-toe.git
+
+
