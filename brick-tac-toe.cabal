@@ -6,10 +6,10 @@ author:              Ranjit Jhala
 maintainer:          rjhala@eng.ucsd.edu
 category:            Game
 build-type:          Simple
-extra-source-files:  ChangeLog.md, README.md
+extra-source-files:  README.md
 cabal-version:       >=1.10
 
-executable tic-tac-toe
+executable brick-tac-toe
   main-is:             Main.hs
   build-depends:       base >=4.9, random >=1.1 && <1.2
   hs-source-dirs:      src
