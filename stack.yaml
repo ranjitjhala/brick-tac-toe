@@ -1,0 +1,7 @@
+resolver: lts-16.16
+flags: {}
+packages:
+  - '.'
+extra-deps: []
+allow-newer: true
+compiler: ghc-8.10.2
