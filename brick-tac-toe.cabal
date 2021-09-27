@@ -11,16 +11,21 @@ cabal-version:       >=1.10
 
 executable brick-tac-toe
   main-is:             Main.hs
-  build-depends:       base >=4.9, random >=1.1 && <1.2
+  build-depends:       base >=4.9, 
+                       random >=1.1 && <1.2,
+                       containers,
+                       vty, 
+                       brick
   hs-source-dirs:      src
-  other-modules:       Checks,
-                       Types,
-                       Misc,
-                       Player.Computer, 
-                       Player.MinMax, 
-                       Player.Human
-
+  other-modules:       View, 
+                       Control,
+                       Model, 
+                       Model.Board,
+                       Model.Score,
+                       Model.Player
+		       
   default-language:    Haskell2010
+  ghc-options:       -W -threaded
 
 test-suite tests
   default-language: Haskell98
