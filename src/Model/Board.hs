@@ -1,17 +1,18 @@
+{-# LANGUAGE DeriveFunctor #-}
 module Model.Board 
   ( -- * Types
     Board
   , XO (..)
   , Pos (..)
+  , Result (..)
 
     -- * Board API
   , dim
   , (!)
   , init
   , put
-  , wins
-  , isFull
   , positions
+  , emptyPositions
 
     -- * Moves
   , up
@@ -50,16 +51,34 @@ dim = 3
 positions :: [Pos]
 positions = [ Pos r c | r <- [1..dim], c <- [1..dim] ] 
 
--- emptyPositions :: Board -> [Pos]
--- emptyPositions board  = [ p | p <- positions, M.notMember p board]
+emptyPositions :: Board -> [Pos]
+emptyPositions board  = [ p | p <- positions, M.notMember p board]
 
 init :: Board
 init = M.empty
 
-put :: Board -> Pos -> XO -> Board
-put board pos xo = case M.lookup pos board of 
-  Nothing -> M.insert pos xo board 
-  Just _  -> board
+-------------------------------------------------------------------------------
+-- | Playing a Move
+-------------------------------------------------------------------------------
+                 
+data Result a 
+  = Draw 
+  | Win XO
+  | Retry 
+  | Cont a
+  deriving (Eq, Functor)
+
+put :: Board -> XO -> Pos -> Result Board
+put board xo pos = case M.lookup pos board of 
+  Just _  -> Retry
+  Nothing -> result (M.insert pos xo board) 
+
+result :: Board -> Result Board
+result b 
+  | isFull b  = Draw
+  | wins b X  = Win  X 
+  | wins b O  = Win  O
+  | otherwise = Cont b
 
 wins :: Board -> XO -> Bool
 wins b xo = or [ winsPoss b xo ps | ps <- winPositions ]

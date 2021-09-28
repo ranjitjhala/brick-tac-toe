@@ -6,6 +6,11 @@ import qualified Model.Score  as Score
 import qualified Model.Player as Player
 
 -------------------------------------------------------------------------------
+-- | Ticks mark passing of time: a custom event that we constantly stream
+-------------------------------------------------------------------------------
+data Tick = Tick
+
+-------------------------------------------------------------------------------
 -- | Top-level App State ------------------------------------------------------
 -------------------------------------------------------------------------------
 
@@ -15,22 +20,24 @@ data State
   | Outro 
   
 data PlayState = PS
-  { psX     :: Player.Player  -- ^ player X info
-  , psO     :: Player.Player  -- ^ player O info
-  , psScore :: Score.Score    -- ^ current score
-  , psBoard :: Board.Board    -- ^ current board
-  , psTurn  :: Board.XO       -- ^ whose turn 
-  , psPos   :: Board.Pos      -- ^ current cursor
+  { psX      :: Player.Player   -- ^ player X info
+  , psO      :: Player.Player   -- ^ player O info
+  , psScore  :: Score.Score     -- ^ current score
+  , psBoard  :: Board.Board     -- ^ current board
+  , psTurn   :: Board.XO        -- ^ whose turn 
+  , psPos    :: Board.Pos       -- ^ current cursor
+  , psResult :: Board.Result () -- ^ result      
   } 
 
 init :: Int -> PlayState
 init n = PS 
-  { psX     = Player.human
-  , psO     = Player.rando
-  , psScore = Score.init n
-  , psBoard = Board.init
-  , psTurn  = Board.X
-  , psPos   = head Board.positions 
+  { psX      = Player.human
+  , psO      = Player.rando
+  , psScore  = Score.init n
+  , psBoard  = Board.init
+  , psTurn   = Board.X
+  , psPos    = head Board.positions 
+  , psResult = Board.Cont ()
   }
 
 isCurr :: PlayState -> Int -> Int -> Bool

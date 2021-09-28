@@ -25,12 +25,25 @@ header s = printf "Tic-Tac-Toe row = %d, col = %d" (pRow p) (pCol p)
   where p = psPos s
 
 mkRow :: PlayState -> Int -> Widget n
-mkRow s row = hTile [ cell s row i | i <- [1..dim] ]
+mkRow s row = hTile [ mkCell s row i | i <- [1..dim] ]
 
-cell :: PlayState -> Int -> Int -> Widget n
-cell s r c 
-  | isCurr s r c = center (fill '.')
-  | otherwise    = center (str (printf "(%d, %d)" r c)) 
+mkCell :: PlayState -> Int -> Int -> Widget n
+mkCell s r c = wrapCursor cur (mkXO xoMb) 
+  where
+    cur      = isCurr s r c
+    xoMb     = psBoard s ! Pos r c
+
+mkXO :: Maybe XO -> Widget n
+mkXO Nothing  = str " "
+mkXO (Just X) = str "X"
+mkXO (Just O) = str "O"
+
+wrapCursor :: Bool -> Widget n -> Widget n
+wrapCursor wrap widget
+  | wrap      = stars <+> widget <+> stars
+  | otherwise = widget
+  where 
+    stars     = str " *** "
 
 vTile :: [Widget n] -> Widget n
 vTile (b:bs) = vBox (b : [hBorder <=> b | b <- bs])
