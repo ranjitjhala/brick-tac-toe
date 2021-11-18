@@ -1,6 +1,6 @@
 # Tic-Tac-Toe 
 
-Ported from https://github.com/nikivazou/tic-tac-toe.git
+Super minimal tic-tac-toe to illustrate use of `brick`
 
 ## Instructions
 
