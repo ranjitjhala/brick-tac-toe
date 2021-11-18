@@ -13,6 +13,8 @@ module Model.Board
   , put
   , positions
   , emptyPositions
+  , boardWinner
+  , flipXO
 
     -- * Moves
   , up
@@ -34,7 +36,7 @@ type Board = M.Map Pos XO
 data XO 
   = X 
   | O
-  deriving (Eq)
+  deriving (Eq, Show)
 
 data Pos = Pos 
   { pRow :: Int  -- 1 <= pRow <= dim 
@@ -66,7 +68,7 @@ data Result a
   | Win XO
   | Retry 
   | Cont a
-  deriving (Eq, Functor)
+  deriving (Eq, Functor, Show)
 
 put :: Board -> XO -> Pos -> Result Board
 put board xo pos = case M.lookup pos board of 
@@ -120,4 +122,12 @@ right :: Pos -> Pos
 right p = p 
   { pCol = min dim (pCol p + 1) 
   } 
+
+boardWinner :: Result a -> Maybe XO
+boardWinner (Win xo) = Just xo
+boardWinner _        = Nothing
+
+flipXO :: XO -> XO
+flipXO X = O
+flipXO O = X
 
