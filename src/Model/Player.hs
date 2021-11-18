@@ -1,7 +1,7 @@
 module Model.Player where
 
 import Model.Board
-import System.Random (Random(randomRIO))
+import System.Random -- (Random(randomRIO))
 
 -------------------------------------------------------------------------------
 -- | Players and Strategies ---------------------------------------------------
